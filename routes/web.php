@@ -18,5 +18,3 @@ use App\Http\Controllers\PostController;
 Route::resource('/posts',PostController::class);
 
 Route::get('/logout',[AuthController::class,'logout']);
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/posts',[PostController::class,'index']);
