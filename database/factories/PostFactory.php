@@ -24,6 +24,7 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
+            'category_id' => rand(1,3),
             'created_at' => now(),
         ];
     }
