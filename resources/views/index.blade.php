@@ -3,8 +3,13 @@
 @section('content')
 <h1 class="text-center my-3">Simple Blog</h1>
 <div class="container">
-    <a href="/posts/create" class="btn btn-primary mb-3">Add New Post</a>
-    <a href="/logout" class="btn btn-secondary mb-3">Logout</a>
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <a href="/posts/create" class="btn btn-primary mb-3">Add New Post</a>
+            <a href="/logout" class="btn btn-secondary mb-3">Logout</a>
+        </div>
+        <h4>{{auth()->user()->name}}</h4>
+    </div>
     <div class="card mb-4">
         <div class="card-header text-center">
             Content

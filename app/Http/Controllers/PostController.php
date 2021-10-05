@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePostRequest;
-use App\Models\Category;
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\StorePostRequest;
 
 class PostController extends Controller
 {
@@ -20,7 +21,7 @@ class PostController extends Controller
     */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::where('user_id',auth()->user()->id)->orderBy('id','desc')->get();
         return view('index',compact('posts'));
     }
 
@@ -56,6 +57,10 @@ class PostController extends Controller
     */
     public function show(Post $post)
     {
+        // if($post->user_id !== auth()->user()->id){
+        //     abort(403);
+        // }
+        $this->authorize('view', $post);
         return view('post',compact('post'));
     }
 
@@ -67,6 +72,10 @@ class PostController extends Controller
     */
     public function edit(Post $post)
     {
+        // if($post->user_id !== auth()->user()->id){
+        //     abort(403);
+        // }
+        $this->authorize('view', $post);
         $categories = Category::all();
         return view('edit',compact('post','categories'));
     }
