@@ -8,12 +8,12 @@
             Content
         </div>
         <div class="card-body">
-                <h5 class="card-title">{{$post->title}}</h5>
-                <p class="card-text">{{$post->description}}</p>
-                <p class="card-text text-primary"> Category : {{$post->category->name}}</p>
-                <a href="/posts" class="btn btn-primary">
+            <h5 class="card-title">{{$post->title}}</h5>
+            <p class="card-text">{{$post->description}}</p>
+            <p class="card-text text-primary"> Category : {{$post->category->name}}</p>
+            <a href="/posts" class="btn btn-primary">
                 Back</a>
+            </div>
         </div>
     </div>
-</div>
-@endsection
+    @endsection

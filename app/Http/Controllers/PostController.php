@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StorePostRequest;
+use App\Mail\PostCreated;
+use App\Mail\PostStored;
+use Illuminate\Support\Facades\Mail;
 
 class PostController extends Controller
 {
@@ -45,8 +47,8 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $validate = $request->validated();
-        Post::create($validate);
-        return redirect('/posts');
+        $post = Post::create($validate + ['user_id' => auth()->user()->id]);
+        return redirect('/posts')->with('status', config('aprogrammer.message.create'));
     }
 
     /**
@@ -91,7 +93,7 @@ class PostController extends Controller
     {
         $validate = $request->validated();
         $post->update($validate);
-        return redirect('/posts');
+        return redirect('/posts')->with('status',config('aprogrammer.message.update'));
     }
 
     /**
@@ -103,6 +105,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect('/posts');
+        return redirect('/posts')->with('status',config('aprogrammer.message.delete'));
     }
 }

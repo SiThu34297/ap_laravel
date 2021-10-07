@@ -10,6 +10,12 @@
         </div>
         <h4>{{auth()->user()->name}}</h4>
     </div>
+    @if (session('status'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> {{session('status')}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
     <div class="card mb-4">
         <div class="card-header text-center">
             Content
