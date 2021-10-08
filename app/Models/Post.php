@@ -22,9 +22,9 @@ class Post extends Model
 
     protected static function booted()
     {
-        static::created(function ($post) {
-            Mail::to('alice@gmail.com')->send(new PostStored($post));
-        });
+        // static::created(function ($post) {
+        //     Mail::to('alice@gmail.com')->send(new PostStored($post));
+        // });
         static::updated(function ($post) {
             Mail::to('alice@gmail.com')->send(new PostUpdated($post));
         });

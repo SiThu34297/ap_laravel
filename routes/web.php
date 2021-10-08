@@ -17,7 +17,7 @@ use App\TestFacade;
 |
 */
 Route::get('/',function(){
-   return TestFacade::execute();
+   return view('welcome');
 });
 
 Route::resource('/posts',PostController::class);

@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostCreatedEvent;
 use App\Models\Post;
-use App\Models\Category;
-use Illuminate\Http\Request;
-use App\Http\Requests\StorePostRequest;
-use App\Mail\PostCreated;
 use App\Mail\PostStored;
+use App\Models\Category;
+use App\Mail\PostCreated;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\StorePostRequest;
+use App\Models\User;
+use App\Notifications\PostCreatedNotification;
+use Illuminate\Support\Facades\Notification;
 
 class PostController extends Controller
 {
@@ -23,6 +27,9 @@ class PostController extends Controller
     */
     public function index()
     {
+        // $user = User::find(1);
+        // $user->notify(new PostCreatedNotification());
+        // Notification::send(User::find(1), new PostCreatedNotification());
         $posts = Post::where('user_id',auth()->user()->id)->orderBy('id','desc')->get();
         return view('index',compact('posts'));
     }
@@ -48,6 +55,7 @@ class PostController extends Controller
     {
         $validate = $request->validated();
         $post = Post::create($validate + ['user_id' => auth()->user()->id]);
+        event(new PostCreatedEvent($post));
         return redirect('/posts')->with('status', config('aprogrammer.message.create'));
     }
 
